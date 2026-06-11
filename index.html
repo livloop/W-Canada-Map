@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Canada - Topographic Map</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23d52b1e'/%3E%3Ctext y='78' x='50' font-size='80' text-anchor='middle' fill='white'%3E%E2%9C%81%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="map">
+    <canvas id="relief"></canvas>
+    <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+
+    <header id="title">
+      <h1>Canada</h1>
+      <p>Topographic relief &middot; Lambert Conformal Conic (EPSG&nbsp;3978)</p>
+    </header>
+
+    <div id="legend">
+      <div class="legend-title">Elevation</div>
+      <div class="legend-bar"></div>
+      <div class="legend-scale">
+        <span>0&nbsp;m</span><span>1&nbsp;km</span><span>2&nbsp;km</span><span>3&nbsp;km</span><span>4&nbsp;km+</span>
+      </div>
+    </div>
+
+    <div id="controls">
+      <label><input type="checkbox" id="t-labels" checked /> Cities</label>
+      <label><input type="checkbox" id="t-rivers" checked /> Rivers</label>
+      <label><input type="checkbox" id="t-borders" checked /> Borders</label>
+      <label><input type="checkbox" id="t-grid" /> Graticule</label>
+    </div>
+
+    <footer id="credit">
+      Elevation: AWS Terrain Tiles (Tilezen / Mapzen) &middot; Vectors: Natural Earth
+    </footer>
+
+    <div id="tooltip" class="hidden"></div>
+    <div id="loader">Rendering topography&hellip;</div>
+  </div>
+
+  <script src="vendor/d3.v7.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
