@@ -44,3 +44,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # GitHub Pages propagation has been slow (~7-10 min); the action's
+          # default 10-min timeout was tripping. Allow up to 20 min.
+          timeout: 1200000
