@@ -129,7 +129,7 @@ function popup(id,src){const d=DATA[idmap[id]||id];if(!d)return id;
 
 const LINE={ngtl:{color:'#e8651f',weight:2},westcoast:{color:'#2f6fb0',weight:2.5},
  cgl:{color:'#1f6dd0',weight:4},cedarlink:{color:'#3f8fc4',weight:2,dashArray:'5 4'},egp:{color:'#7d9b3a',weight:2,dashArray:'6 4'},tilfeed:{color:'#8a8a8a',weight:2,dashArray:'2 5'},prgt:{color:'#119b8c',weight:3.6,dashArray:'10 6'},
- ptp:{color:'#8a4fc0',weight:3,dashArray:'2 7'},nass:{color:'#d99411',weight:2.4,dashArray:'7 5'}};
+ ptp:{color:'#b02fd6',weight:3.6,dashArray:'12 7'},nass:{color:'#d99411',weight:2.4,dashArray:'7 5'}};
 const FNROLE={owner:['#1f7a44','#2ca85e'],opp:['#b23c28','#e2664f'],prod:['#6f4bb0','#a98cd9'],other:['#3a5f86','#5b86b0']};
 const TERMCOL={lngc:'#2ca85e',ksi:'#1f6dd0',bish:'#8a4fc0',cedar:'#7f93a0'};
 const gPipe=L.layerGroup(),gNGTL=L.layerGroup(),gMont=L.layerGroup(),gFN=L.layerGroup(),gFNarea=L.layerGroup();
@@ -176,7 +176,7 @@ if(L_.producers)eachFeat(L_.producers,function(f){var p=f.properties,c=f.geometr
 // terminals
 if(L_.terminals)eachFeat(L_.terminals,f=>{const id=f.properties.id,c=f.geometry.coordinates;
  // fan out the three Kitimat-area labels so they don't overlap
- var dir={lngc:'top',cedar:'right',bish:'left'}[id]||'right',off={top:[0,-8],bottom:[0,8],left:[-7,0],right:[8,0]}[dir];
+ var dir={lngc:'bottom',cedar:'right',bish:'left'}[id]||'right',off={top:[0,-8],bottom:[0,8],left:[-7,0],right:[8,0]}[dir];
  var fl=(id==='ksi'||id==='cedar'||id==='bish');  // floating LNG (FLNG) vessel sites
  var m=(fl?L.marker([c[1],c[0]],{icon:L.divIcon({className:'',iconSize:[22,13],iconAnchor:[11,7],html:'<div class="flng" style="background:'+(TERMCOL[id]||'#888')+'"></div>'})}):L.circleMarker([c[1],c[0]],{radius:9,color:'#fff',weight:2,fillColor:TERMCOL[id]||'#888',fillOpacity:1}))
   .on('click',()=>show(id)).bindPopup(popup(id),{maxWidth:300}).bindTooltip(f.properties.name,{permanent:true,interactive:true,direction:dir,className:'lbl lbl-t'+(id==='cedar'?'':' lbl-main'),offset:off}).addTo(gPipe);
@@ -236,7 +236,7 @@ L.control.scale({imperial:false}).addTo(map);
   +row(ln('#7d9b3a',2,'6 4'),'Eagle Mountain'+sm('to Woodfibre LNG'))
   +row(ln('#8a8a8a',2,'2 5'),'Tilbury feed'+sm('FortisBC, schematic'))
   +row(ln('#119b8c',3.6,'10 6'),'PRGT'+sm('proposed/building'))
-  +row(ln('#8a4fc0',3,'2 7'),'Pacific Trails'+sm('legacy/dormant'))
+  +row(ln('#b02fd6',3.6,'12 7'),'Pacific Trails'+sm('legacy/dormant'))
   +row(ln('#d99411',2.4,'7 5'),'Nass Valley power'+sm('proposed'))
   +'<h4>Terminals &amp; hubs</h4>'
   +row(dot('#2ca85e'),'Operational terminal')
