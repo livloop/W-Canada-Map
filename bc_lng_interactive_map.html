@@ -176,7 +176,7 @@ if(L_.producers)eachFeat(L_.producers,function(f){var p=f.properties,c=f.geometr
 // terminals
 if(L_.terminals)eachFeat(L_.terminals,f=>{const id=f.properties.id,c=f.geometry.coordinates;
  // fan out the three Kitimat-area labels so they don't overlap
- var dir={lngc:'bottom',cedar:'right',bish:'left'}[id]||'right',off={top:[0,-8],bottom:[0,8],left:[-7,0],right:[8,0]}[dir];
+ var dir={lngc:'left',cedar:'right',bish:'left'}[id]||'right',off={top:[0,-8],bottom:[0,8],left:[-7,0],right:[8,0]}[dir],vn={lngc:-19,bish:19}[id]||0;off=[off[0],off[1]+vn];  // nudge LNG Canada up, Bish Cove down so both left-labels separate
  var fl=(id==='ksi'||id==='cedar'||id==='bish');  // floating LNG (FLNG) vessel sites
  var m=(fl?L.marker([c[1],c[0]],{icon:L.divIcon({className:'',iconSize:[22,13],iconAnchor:[11,7],html:'<div class="flng" style="background:'+(TERMCOL[id]||'#888')+'"></div>'})}):L.circleMarker([c[1],c[0]],{radius:9,color:'#fff',weight:2,fillColor:TERMCOL[id]||'#888',fillOpacity:1}))
   .on('click',()=>show(id)).bindPopup(popup(id),{maxWidth:300}).bindTooltip(f.properties.name,{permanent:true,interactive:true,direction:dir,className:'lbl lbl-t'+(id==='cedar'?'':' lbl-main'),offset:off}).addTo(gPipe);
