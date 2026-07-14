@@ -48,6 +48,12 @@ h1{font-size:26px;font-weight:800}h1 em{color:var(--gold);font-style:italic}
 .legend .rect{flex:none}
 .legend .rect{width:18px;height:11px;border-radius:2px}
 .legend .note{margin-top:9px;padding-top:7px;border-top:1px solid #ffffff1a;font-style:italic;color:var(--ink2);font-size:10px;line-height:1.45}
+.leaflet-control-layers{position:relative}
+.layers-min-btn{position:absolute;top:1px;right:3px;font:700 15px/1 monospace;color:#555;text-decoration:none;padding:3px 6px;border-radius:4px}
+.layers-min-btn:hover{color:#000;background:#00000012}
+.layers-minimized .leaflet-control-layers-list{display:none}
+.layers-minimized{padding:0 !important}
+.layers-minimized .layers-min-btn{position:static;display:block;padding:7px 10px;font-size:16px}
 </style></head><body><!-- Self-contained: layers.js is embedded inline. Edit the LNG_LAYERS object below to update data. -->
 <div class="wrap">
 <h1>Western Canada LNG - <em>GIS Map</em></h1>
@@ -215,8 +221,19 @@ function declutterLabels(){
 }
 map.on('zoomend moveend overlayadd overlayremove',declutterLabels);
 setTimeout(declutterLabels,300);
-L.control.layers({'Topographic (Esri)':topo,'Street (OSM)':osm,'Satellite (Esri)':imagery},
+const layersCtl=L.control.layers({'Topographic (Esri)':topo,'Street (OSM)':osm,'Satellite (Esri)':imagery},
  {'Montney basin':gMont,'NGTL & Westcoast':gNGTL,'Project pipelines & terminals':gPipe,'Relevant First Nations':gFN,'First Nations areas (approx)':gFNarea},{collapsed:false}).addTo(map);
+// Minimize/restore button for the layer control
+(function(){
+ const cont=layersCtl.getContainer();
+ const btn=L.DomUtil.create('a','layers-min-btn');
+ btn.href='#';btn.innerHTML='&#8722;';btn.title='Minimize';
+ cont.insertBefore(btn,cont.firstChild);
+ L.DomEvent.disableClickPropagation(btn);
+ L.DomEvent.on(btn,'click',function(e){L.DomEvent.stop(e);
+  const min=cont.classList.toggle('layers-minimized');
+  btn.innerHTML=min?'&#9776;':'&#8722;';btn.title=min?'Show layers':'Minimize';});
+})();
 L.control.scale({imperial:false}).addTo(map);
 // Fixed on-map legend (bottom-right) - colors/styles mirror the layer styling above.
 (function(){
