@@ -138,10 +138,10 @@ function popup(id,src){const d=DATA[idmap[id]||id];if(!d)return id;
  return '<b>'+d.h+'</b><br><span style="color:#9fb2bd">'+d.tag+'</span><br>'+d.p+riskBadge(id)+permitNote(id)+(src==='approx'?'<br><span style="color:#e0a93c;font-style:italic">⚠ approximate geometry - replace via build_layers.py</span>':'');}
 
 const LINE={ngtl:{color:'#e8651f',weight:2},westcoast:{color:'#2f6fb0',weight:2.5},
- cgl:{color:'#1f6dd0',weight:4},cedarlink:{color:'#3f8fc4',weight:2,dashArray:'5 4'},egp:{color:'#7d9b3a',weight:2,dashArray:'6 4'},tilfeed:{color:'#8a8a8a',weight:2,dashArray:'2 5'},prgt:{color:'#119b8c',weight:3.6,dashArray:'10 6'},
+ cgl:{color:'#e0262d',weight:4},cedarlink:{color:'#3f8fc4',weight:2,dashArray:'5 4'},egp:{color:'#7d9b3a',weight:2,dashArray:'6 4'},tilfeed:{color:'#8a8a8a',weight:2,dashArray:'2 5'},prgt:{color:'#119b8c',weight:3.6,dashArray:'10 6'},
  ptp:{color:'#b02fd6',weight:3.6,dashArray:'12 7'},nass:{color:'#d99411',weight:2.4,dashArray:'7 5'}};
 const FNROLE={owner:['#1f7a44','#2ca85e'],opp:['#b23c28','#e2664f'],prod:['#6f4bb0','#a98cd9'],other:['#3a5f86','#5b86b0']};
-const TERMCOL={lngc:'#1f6dd0',ksi:'#119b8c',bish:'#b02fd6',cedar:'#7f93a0'}  // project icons match their feed pipeline colors;
+const TERMCOL={lngc:'#e0262d',ksi:'#119b8c',bish:'#b02fd6',cedar:'#7f93a0'}  // project icons match their feed pipeline colors;
 const gPipe=L.layerGroup(),gNGTL=L.layerGroup(),gMont=L.layerGroup(),gFN=L.layerGroup(),gFNarea=L.layerGroup();
 // First Nations areas (approximate territories, Native Land Digital). Toggle layer, off by default.
 if(L_.fnareas)L.geoJSON(L_.fnareas,{style:function(f){var c=f.properties.color;return{color:c,weight:1,opacity:.7,fillColor:c,fillOpacity:.12};},
@@ -262,7 +262,7 @@ lblCtl.addTo(map);
   +row(ln('#e8651f',2),'NGTL network'+sm('existing'))
   +row(ln('#e8651f',4),'North Montney Mainline'+sm('NGTL · existing'))
   +row(ln('#2f6fb0',2.5),'Westcoast BC pipeline'+sm('existing'))
-  +row(ln('#1f6dd0',4),'Coastal GasLink'+sm('operational'))
+  +row(ln('#e0262d',4),'Coastal GasLink'+sm('operational'))
   +row(ln('#3f8fc4',2,'5 4'),'Cedar Link'+sm('to Cedar LNG'))
   +row(ln('#7d9b3a',2,'6 4'),'Eagle Mountain'+sm('to Woodfibre LNG'))
   +row(ln('#8a8a8a',2,'2 5'),'Tilbury feed'+sm('FortisBC, schematic'))
@@ -270,7 +270,7 @@ lblCtl.addTo(map);
   +row(ln('#b02fd6',3.6,'12 7'),'Pacific Trails'+sm('legacy/dormant'))
   +row(ln('#d99411',2.4,'7 5'),'Nass Valley power'+sm('proposed'))
   +'<h4>Terminals &amp; hubs</h4>'
-  +row(dot('#1f6dd0'),'LNG Canada'+sm('fed by CGL'))
+  +row(dot('#e0262d'),'LNG Canada'+sm('fed by CGL'))
   +row(dot('#119b8c'),'Ksi Lisims'+sm('fed by PRGT'))
   +row(dot('#b02fd6'),'Bish Cove'+sm('fed by Pacific Trails'))
   +row('<span style="display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid #1f6dd0;background:rgba(31,109,208,.25)"></span>','Proposed / early-stage')
