@@ -73,6 +73,7 @@ h1{font-size:26px;font-weight:800}h1 em{color:var(--gold);font-style:italic}
 <script>
 const L_ = window.LNG_LAYERS || {};
 const map = L.map('map').setView([54.0,-117.0],5);
+map.createPane('projterm');map.getPane('projterm').style.zIndex=615;  // project terminal dots above polygon fills
 const DEFAULT_INFO=document.getElementById('info').innerHTML;  // overview shown when nothing is selected
 function resetInfo(){document.getElementById('info').innerHTML=DEFAULT_INFO;}
 map.on('click',resetInfo);  // clicking the empty basemap (not a feature) clears the excerpt
@@ -189,7 +190,7 @@ if(L_.terminals)eachFeat(L_.terminals,f=>{const id=f.properties.id,c=f.geometry.
  var dir={lngc:'left',cedar:'right',bish:'left'}[id]||'right',off={top:[0,-8],bottom:[0,8],left:[-7,0],right:[8,0]}[dir],vn={lngc:-19,bish:19}[id]||0;off=[off[0],off[1]+vn];  // nudge LNG Canada up, Bish Cove down so both left-labels separate
  var fl=(id==='ksi'||id==='cedar'||id==='bish');  // floating LNG (FLNG) vessel sites
  var isz=(id==='cedar'?[15,9]:[22,13]);  // cedar drawn smaller to declutter the Kitimat cluster
- var m=(fl?L.marker([c[1],c[0]],{icon:L.divIcon({className:'',iconSize:isz,iconAnchor:[isz[0]/2,isz[1]/2],html:'<div class="flng'+(id==='cedar'?' flng-sm':'')+'" style="background:'+(TERMCOL[id]||'#888')+'"></div>'})}):L.circleMarker([c[1],c[0]],{radius:10,color:'#fff',weight:3,fillColor:TERMCOL[id]||'#888',fillOpacity:1}))
+ var m=(fl?L.marker([c[1],c[0]],{icon:L.divIcon({className:'',iconSize:isz,iconAnchor:[isz[0]/2,isz[1]/2],html:'<div class="flng'+(id==='cedar'?' flng-sm':'')+'" style="background:'+(TERMCOL[id]||'#888')+'"></div>'})}):L.circleMarker([c[1],c[0]],{pane:'projterm',radius:10,color:'#fff',weight:3,fillColor:TERMCOL[id]||'#888',fillOpacity:1}))
   .on('click',()=>show(id)).bindPopup(popup(id),{maxWidth:300}).bindTooltip(f.properties.name,{permanent:true,interactive:true,direction:dir,className:'lbl lbl-t'+(id==='cedar'?'':' lbl-main'),offset:off}).addTo(gPipe);
  m.getTooltip().on('click',function(){show(id);m.openPopup();});});
 // hubs
