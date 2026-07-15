@@ -30,7 +30,7 @@ h1{font-size:26px;font-weight:800}h1 em{color:var(--gold);font-style:italic}
 .approx{color:#e0a93c;font-size:11px;margin-top:8px;font-style:italic}
 .risk{display:block;margin-top:10px;padding:6px 10px;border-radius:8px;font-size:11.5px;font-weight:700;font-family:monospace;letter-spacing:.03em;line-height:1.5}
 .permit{display:block;margin-top:8px;padding:6px 10px;border-radius:8px;font-size:11px;line-height:1.5;background:#15303f;color:#cfe3ee;border:1px solid #2f6fb0}
-.flng{width:22px;height:13px;border:2px solid #fff;border-radius:2px 8px 8px 2px;box-shadow:0 0 0 1px #0007}
+.flng{width:22px;height:13px;border:2px solid #fff;border-radius:2px 8px 8px 2px;box-shadow:0 0 0 1px #0007,0 0 9px 2px #ffffffb3}
 .risk small{display:block;margin-top:3px;font-weight:500;opacity:.85;letter-spacing:0}
 .risk .meter{display:inline-block;width:54px;height:6px;border-radius:3px;background:#ffffff2e;vertical-align:middle;margin-left:7px;overflow:hidden}
 .risk .meter i{display:block;height:100%;background:currentColor;opacity:.9}
@@ -141,7 +141,7 @@ const LINE={ngtl:{color:'#e8651f',weight:2},westcoast:{color:'#2f6fb0',weight:2.
  cgl:{color:'#1f6dd0',weight:4},cedarlink:{color:'#3f8fc4',weight:2,dashArray:'5 4'},egp:{color:'#7d9b3a',weight:2,dashArray:'6 4'},tilfeed:{color:'#8a8a8a',weight:2,dashArray:'2 5'},prgt:{color:'#119b8c',weight:3.6,dashArray:'10 6'},
  ptp:{color:'#b02fd6',weight:3.6,dashArray:'12 7'},nass:{color:'#d99411',weight:2.4,dashArray:'7 5'}};
 const FNROLE={owner:['#1f7a44','#2ca85e'],opp:['#b23c28','#e2664f'],prod:['#6f4bb0','#a98cd9'],other:['#3a5f86','#5b86b0']};
-const TERMCOL={lngc:'#2ca85e',ksi:'#1f6dd0',bish:'#8a4fc0',cedar:'#7f93a0'};
+const TERMCOL={lngc:'#1f6dd0',ksi:'#119b8c',bish:'#b02fd6',cedar:'#7f93a0'}  // project icons match their feed pipeline colors;
 const gPipe=L.layerGroup(),gNGTL=L.layerGroup(),gMont=L.layerGroup(),gFN=L.layerGroup(),gFNarea=L.layerGroup();
 // First Nations areas (approximate territories, Native Land Digital). Toggle layer, off by default.
 if(L_.fnareas)L.geoJSON(L_.fnareas,{style:function(f){var c=f.properties.color;return{color:c,weight:1,opacity:.7,fillColor:c,fillOpacity:.12};},
@@ -189,7 +189,7 @@ if(L_.terminals)eachFeat(L_.terminals,f=>{const id=f.properties.id,c=f.geometry.
  var dir={lngc:'left',cedar:'right',bish:'left'}[id]||'right',off={top:[0,-8],bottom:[0,8],left:[-7,0],right:[8,0]}[dir],vn={lngc:-19,bish:19}[id]||0;off=[off[0],off[1]+vn];  // nudge LNG Canada up, Bish Cove down so both left-labels separate
  var fl=(id==='ksi'||id==='cedar'||id==='bish');  // floating LNG (FLNG) vessel sites
  var isz=(id==='cedar'?[15,9]:[22,13]);  // cedar drawn smaller to declutter the Kitimat cluster
- var m=(fl?L.marker([c[1],c[0]],{icon:L.divIcon({className:'',iconSize:isz,iconAnchor:[isz[0]/2,isz[1]/2],html:'<div class="flng'+(id==='cedar'?' flng-sm':'')+'" style="background:'+(TERMCOL[id]||'#888')+'"></div>'})}):L.circleMarker([c[1],c[0]],{radius:9,color:'#fff',weight:2,fillColor:TERMCOL[id]||'#888',fillOpacity:1}))
+ var m=(fl?L.marker([c[1],c[0]],{icon:L.divIcon({className:'',iconSize:isz,iconAnchor:[isz[0]/2,isz[1]/2],html:'<div class="flng'+(id==='cedar'?' flng-sm':'')+'" style="background:'+(TERMCOL[id]||'#888')+'"></div>'})}):L.circleMarker([c[1],c[0]],{radius:10,color:'#fff',weight:3,fillColor:TERMCOL[id]||'#888',fillOpacity:1}))
   .on('click',()=>show(id)).bindPopup(popup(id),{maxWidth:300}).bindTooltip(f.properties.name,{permanent:true,interactive:true,direction:dir,className:'lbl lbl-t'+(id==='cedar'?'':' lbl-main'),offset:off}).addTo(gPipe);
  m.getTooltip().on('click',function(){show(id);m.openPopup();});});
 // hubs
@@ -270,11 +270,11 @@ lblCtl.addTo(map);
   +row(ln('#b02fd6',3.6,'12 7'),'Pacific Trails'+sm('legacy/dormant'))
   +row(ln('#d99411',2.4,'7 5'),'Nass Valley power'+sm('proposed'))
   +'<h4>Terminals &amp; hubs</h4>'
-  +row(dot('#2ca85e'),'Operational terminal')
-  +row(dot('#1f6dd0'),'Pre-FID terminal')
-  +row(dot('#8a4fc0'),'Early-stage terminal')
+  +row(dot('#1f6dd0'),'LNG Canada'+sm('fed by CGL'))
+  +row(dot('#119b8c'),'Ksi Lisims'+sm('fed by PRGT'))
+  +row(dot('#b02fd6'),'Bish Cove'+sm('fed by Pacific Trails'))
   +row('<span style="display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid #1f6dd0;background:rgba(31,109,208,.25)"></span>','Proposed / early-stage')
-  +row('<span style="display:inline-block;width:20px;height:11px;background:#1f6dd0;border:1.5px solid #fff;border-radius:2px 7px 7px 2px"></span>','Floating LNG (FLNG)'+sm('Ksi Lisims, Cedar, Bish Cove'))
+  +row('<span style="display:inline-block;width:20px;height:11px;background:#7f93a0;border:1.5px solid #fff;border-radius:2px 7px 7px 2px"></span>','Floating LNG (FLNG)'+sm('Ksi Lisims, Cedar, Bish Cove'))
   +row(dia('#e8b04b'),'Gas trade hub'+sm('Station 2, AECO'))
   +'<h4>First Nations territories</h4>'
   +row(rect('rgba(44,168,94,.28)','#1f7a44'),'Owner / proponent')
